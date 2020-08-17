@@ -99,7 +99,7 @@ class CPCLayer(keras.layers.Layer):
         # Keras loss functions take probabilities
         # dot_product_probs = K.sigmoid(dot_product)
         # minus the maximum dot product to ensure numerical stability
-        dot_product_probs = K.softmax(dot_product - K.max(dot_product, axis=-1))  # (B, 4, num_neg + 1)
+        dot_product_probs = K.softmax(dot_product - K.max(dot_product, axis=-1, keepdims=True))  # (B, 4, num_neg + 1)
 
         return dot_product_probs
 
