@@ -230,10 +230,9 @@ class SortedNumberGenerator(object):
 
     ''' Data generator providing lists of sorted numbers '''
 
-    def __init__(self, batch_size, subset, terms, positive_samples=1, negative_samples=15, predict_terms=1, image_size=28, color=False, rescale=True):
+    def __init__(self, batch_size, subset, terms, negative_samples=15, predict_terms=1, image_size=28, color=False, rescale=True):
 
         # Set params
-        self.positive_samples = positive_samples
         self.negative_samples = negative_samples
         self.predict_terms = predict_terms
         self.batch_size = batch_size
@@ -301,7 +300,6 @@ class SortedNumberGenerator(object):
         x_images = images[:, :-self.predict_terms]
         y_pos_images = images[:, -self.predict_terms:]
         neg_indices = np.random.choice(self.batch_size, [self.batch_size, self.negative_samples], replace=True)
-        # y_neg_images = np.repeat(np.expand_dims(y_pos_images, axis=0), self.batch_size, axis=0)
         y_neg_images = np.transpose(y_pos_images[neg_indices], axes=[0, 2, 1, 3, 4, 5])
 
         # Randomize
@@ -403,7 +401,7 @@ def plot_sequences(x, y, labels=None, output_path=None):
 if __name__ == "__main__":
 
     # Test SortedNumberGenerator
-    ag = SortedNumberGenerator(batch_size=8, subset='train', terms=4, positive_samples=4, predict_terms=4, image_size=64, color=True, rescale=False)
+    ag = SortedNumberGenerator(batch_size=8, subset='train', terms=4, predict_terms=4, image_size=64, color=True, rescale=False)
     for (x, y), labels in ag:
         plot_sequences(x, y, labels, output_path=r'resources/batch_sample_sorted.png')
         break

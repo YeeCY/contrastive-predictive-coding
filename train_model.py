@@ -164,13 +164,12 @@ def train_model(epochs, batch_size, output_dir, code_size, lr=1e-4, terms=4, pre
 
     # Prepare data
     train_data = SortedNumberGenerator(batch_size=batch_size, subset='train', terms=terms,
-                                       positive_samples=batch_size // 2, negative_samples=num_neg_samples,
-                                       predict_terms=predict_terms, image_size=image_size, color=color, rescale=True)
+                                       negative_samples=num_neg_samples, predict_terms=predict_terms,
+                                       image_size=image_size, color=color, rescale=True)
 
     validation_data = SortedNumberGenerator(batch_size=batch_size, subset='valid', terms=terms,
-                                            positive_samples=batch_size // 2, negative_samples=num_neg_samples,
-                                            predict_terms=predict_terms, image_size=image_size, color=color,
-                                            rescale=True)
+                                            negative_samples=num_neg_samples, predict_terms=predict_terms,
+                                            image_size=image_size, color=color, rescale=True)
 
     # Prepares the model
     model = network_cpc(image_shape=(image_size, image_size, 3), terms=terms, predict_terms=predict_terms,
@@ -209,6 +208,7 @@ if __name__ == "__main__":
         lr=1e-3,
         terms=4,
         predict_terms=4,
+        num_neg_samples=3,
         image_size=64,
         color=True
     )
