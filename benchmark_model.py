@@ -68,11 +68,11 @@ def benchmark_model(encoder_path, epochs, batch_size, output_dir, lr=1e-4, image
 if __name__ == "__main__":
 
     benchmark_model(
-        encoder_path='models/64x64/encoder.h5',
-        epochs=15,
+        encoder_path='models/28x28/encoder.h5',
+        epochs=10,
         batch_size=64,
-        output_dir='models/64x64',
+        output_dir='models/28x28',
         lr=1e-3,
-        image_size=64,
+        image_size=28,
         color=True
     )

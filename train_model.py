@@ -15,20 +15,20 @@ import tensorflow as tf
 def network_encoder(x, code_size):
 
     ''' Define the network mapping images to embeddings '''
-    # x_shape = (B, 64, 64, 3), code_size = 128
-    x = keras.layers.Conv2D(filters=64, kernel_size=3, strides=2, activation='linear')(x)  # (B, 31, 31, 64)
+    # x_shape = (B, 64, 64, 3) or (B, 28, 28, 3), code_size = 128
+    x = keras.layers.Conv2D(filters=64, kernel_size=3, strides=2, activation='linear')(x)  # (B, 31, 31, 64) or (B, 13, 13, 64)
     x = keras.layers.BatchNormalization()(x)
     x = keras.layers.LeakyReLU()(x)
-    x = keras.layers.Conv2D(filters=64, kernel_size=3, strides=2, activation='linear')(x)  # (B, 15, 15, 64)
+    x = keras.layers.Conv2D(filters=64, kernel_size=3, strides=2, activation='linear')(x)  # (B, 15, 15, 64) or (B, 6, 6, 64)
     x = keras.layers.BatchNormalization()(x)
     x = keras.layers.LeakyReLU()(x)
-    x = keras.layers.Conv2D(filters=64, kernel_size=3, strides=2, activation='linear')(x)  # (B, 7, 7, 64)
+    x = keras.layers.Conv2D(filters=64, kernel_size=3, strides=2, activation='linear')(x)  # (B, 7, 7, 64) or (B, 2, 2, 64)
     x = keras.layers.BatchNormalization()(x)
     x = keras.layers.LeakyReLU()(x)
-    x = keras.layers.Conv2D(filters=64, kernel_size=3, strides=2, activation='linear')(x)  # (B, 3, 3, 64)
-    x = keras.layers.BatchNormalization()(x)
-    x = keras.layers.LeakyReLU()(x)
-    x = keras.layers.Flatten()(x)  # (B, 576)
+    # x = keras.layers.Conv2D(filters=64, kernel_size=3, strides=2, activation='linear')(x)  # (B, 3, 3, 64)
+    # x = keras.layers.BatchNormalization()(x)
+    # x = keras.layers.LeakyReLU()(x)
+    x = keras.layers.Flatten()(x)  # (B, 576) or (B, 256)
     x = keras.layers.Dense(units=256, activation='linear')(x)  # (B, 256)
     x = keras.layers.BatchNormalization()(x)
     x = keras.layers.LeakyReLU()(x)
@@ -203,13 +203,13 @@ if __name__ == "__main__":
     train_model(
         epochs=10,
         batch_size=32,
-        output_dir='models/64x64',
+        output_dir='models/28x28',
         code_size=128,
         lr=1e-3,
         terms=4,
         predict_terms=4,
         num_neg_samples=3,
-        image_size=64,
+        image_size=28,
         color=True
     )
 
